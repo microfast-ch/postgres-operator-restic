@@ -57,7 +57,7 @@ for search in "${search_strategy[@]}"; do
 done
 
 # Configure supplied credentials from secrets
-if [ -f /var/run/restic-data/id_rsa]; then
+if [ -f /var/run/restic-data/id_rsa ]; then
     cp /var/run/restic-data/id_rsa ~/.ssh/id_rsa
     chmod 600 ~/.ssh/id_rsa
 fi
