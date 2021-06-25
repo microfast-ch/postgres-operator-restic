@@ -16,3 +16,9 @@ Whereas the `postgres-restic` secret can have these keys:
 - `id_rsa`: File which is used as rsa ssh private key for sftp connections
 - `repository`: String that is exported as `RESTIC_REPOSITORY`
 - `password`: String that is exported as `RESTIC_PASSWORD`
+
+So to configure the credentials, you can run something like it in the namespace where the DB is running:
+
+```plaintext
+kubectl create secret generic postgres-restic --from-literal=repository=sftp://storage.example.com/db-postgres/ --from-file=id_rsa=/tmp/bck.rsa --from-literal=password=1234567890
+```
