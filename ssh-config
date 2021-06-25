@@ -1,0 +1,4 @@
+# Disable ssh host key checking for the backup job, at least if the container
+# is recreated.
+Host *
+    StrictHostKeyChecking accept-new

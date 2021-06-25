@@ -56,5 +56,23 @@ for search in "${search_strategy[@]}"; do
 
 done
 
+# Configure supplied credentials from secrets
+if [ -f /var/run/restic-data/id_rsa]; then
+    cp /var/run/restic-data/id_rsa ~/.ssh/id_rsa
+    chmod 600 ~/.ssh/id_rsa
+fi
+
+if [ -f /var/run/restic-data/env ]; then
+    . /var/run/restic-data/env
+fi
+
+if [ -f /var/run/restic-data/repository ]; then
+    export RESTIC_REPOSITORY=$(cat /var/run/restic-data/repository)
+fi
+
+if [ -f /var/run/restic-data/password ]; then
+    export RESTIC_PASSWORD=$(cat /var/run/restic-data/password)
+fi
+
 # Backup data
 pg_dumpall | pigz | restic -H $PGHOST backup --stdin --stdin-filename "$SCOPE$(date +%s).sql.gz"
