@@ -6,6 +6,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+PG_BIN=$PG_DIR/$PG_VERSION/bin
 TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
 K8S_API_URL=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT/api/v1
 CERT=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
@@ -75,4 +76,4 @@ if [ -f /var/run/restic-data/password ]; then
 fi
 
 # Backup data
-pg_dumpall | pigz | restic -H $PGHOST backup --stdin --stdin-filename "$SCOPE$(date +%s).sql.gz"
+"$PG_BIN"/pg_dumpall | pigz | restic -H $PGHOST backup --stdin --stdin-filename "$SCOPE$(date +%s).sql.gz"
