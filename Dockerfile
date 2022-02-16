@@ -8,6 +8,7 @@ RUN apt-get update     \
         ca-certificates \
         lsb-release \
         pigz \
+        gnupg \
         curl \
         jq \
     && echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
